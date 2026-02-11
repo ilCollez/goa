@@ -1074,3 +1074,17 @@ var InterceptorsDSL = func() {
 		})
 	})
 }
+
+var ProtoAnyDSL = func() {
+	Service("ServiceWithProtoAny", func() {
+		Method("MethodWithProtoAny", func() {
+			Payload(func() {
+				Field(1, "Data", ProtoAny, "Any protobuf message")
+			})
+			Result(func() {
+				Field(1, "Response", ProtoAny, "Response as any protobuf message")
+			})
+			GRPC(func() {})
+		})
+	})
+}

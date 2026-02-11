@@ -36,6 +36,8 @@ func GoNativeTypeName(t expr.DataType) string {
 		return "[]byte"
 	case expr.AnyKind:
 		return "any"
+	case expr.ProtoAnyKind:
+		return "any"
 	default:
 		panic(fmt.Sprintf("cannot compute native Go type for %T", t)) // bug
 	}

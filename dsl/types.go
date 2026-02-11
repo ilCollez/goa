@@ -41,6 +41,12 @@ const (
 	// dynamic JSON-like values. Conversion uses structpb.NewValue() for Go to
 	// protobuf and AsInterface() for protobuf to Go.
 	Any = expr.Any
+
+	// ProtoAny is the type for protobuf Any messages (any in Go).
+	// In gRPC, ProtoAny is mapped to google.protobuf.Any which can contain any
+	// protobuf message. Conversion uses anypb.New() for Go to protobuf and
+	// anypb.UnmarshalNew() for protobuf to Go.
+	ProtoAny = expr.ProtoAny
 )
 
 // Empty represents empty values.

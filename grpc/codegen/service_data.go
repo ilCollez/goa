@@ -1,6 +1,7 @@
 package codegen
 
 import (
+	"slices"
 	"fmt"
 	"strings"
 
@@ -673,6 +674,13 @@ func collectMessages(at *expr.AttributeExpr, sd *ServiceData, seen map[string]st
 			}
 			if !found {
 				imports = append(imports, "google/protobuf/struct.proto")
+			}
+		}
+		// Add google.protobuf.Any import when ProtoAny type is used
+		if at.Type.Kind() == expr.ProtoAnyKind {
+			found := slices.Contains(imports, "google/protobuf/any.proto")
+			if !found {
+				imports = append(imports, "google/protobuf/any.proto")
 			}
 		}
 		return data, imports

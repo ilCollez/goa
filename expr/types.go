@@ -132,6 +132,8 @@ const (
 	ResultTypeKind
 	// AnyKind represents an unknown type.
 	AnyKind
+	// ProtoAnyKind represents a protobuf Any type.
+	ProtoAnyKind
 )
 
 const (
@@ -170,6 +172,9 @@ const (
 
 	// Any is the type for an arbitrary JSON value (any in Go).
 	Any = Primitive(AnyKind)
+
+	// ProtoAny is the type for protobuf Any (any in Go, google.protobuf.Any in protobuf).
+	ProtoAny = Primitive(ProtoAnyKind)
 )
 
 // Built-in composite types
@@ -321,6 +326,8 @@ func (p Primitive) Name() string {
 		return "bytes"
 	case Any:
 		return "any"
+	case ProtoAny:
+		return "protoany"
 	default:
 		panic("unknown primitive type") // bug
 	}
@@ -328,7 +335,7 @@ func (p Primitive) Name() string {
 
 // IsCompatible returns true if val is compatible with p.
 func (p Primitive) IsCompatible(val any) bool {
-	if p == Any {
+	if p == Any || p == ProtoAny {
 		return true
 	}
 	switch val.(type) {
@@ -372,7 +379,7 @@ func (p Primitive) Example(r *ExampleGenerator) any {
 		return r.Float32()
 	case Float64:
 		return r.Float64()
-	case String, Any:
+	case String, Any, ProtoAny:
 		return r.String()
 	case Bytes:
 		return []byte(r.String())
